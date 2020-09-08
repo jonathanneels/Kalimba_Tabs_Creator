@@ -4,7 +4,7 @@ Tool for Kalimba (till 21 keys); make/read sheet (incl. while playing) & play in
 Test on https://fumetsujo.pythonanywhere.com/static/OTHER/Kalimba_tabs_Creator.html
 
 
-To-do (feedback admin@kalimbatabs.net):
+To do's (feedback admin@kalimbatabs.net):
 
 *play function
 - change ms to bpm (tempo)
