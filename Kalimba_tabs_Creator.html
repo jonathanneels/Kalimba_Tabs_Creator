@@ -105,16 +105,17 @@ input[type="file"] {
 
 
  <span style="margin-left:1%;"> Start at bottom <input type="checkbox" id="chAddLineToBottom" name="chAddLineToBottom" value="" onchange=""></span>
- <span style="margin-left:1%;"> 3 &#127932; <input type="checkbox" id="chThreeOctaves" name="chThreeOctaves" value="" onchange="setVisualThreeScales()"></span>
- <span style="margin-left:1%;"> <label id="lblSilence">&#128265;</label> <input type="checkbox" id="chSilence" name="chSilence" value="" onchange="setSoundOnOff()" checked></span>
+ <span style="margin-left:1%;"> 3 &#127932; <input type="checkbox" id="chThreeOctaves" name="chThreeOctaves" value="" onchange="var isCh=$('#chThreeOctaves').is(':checked');if(generateSheet()){setVisualThreeScales();}else{ setTimeout(function(){ $('#chThreeOctaves').prop('checked', !isCh); } , 100,isCh);} "></span>
+ <span style="margin-left:1%;"> <label id="lblSilence">&#128263;</label> <input type="checkbox" id="chSilence" name="chSilence" value="" onchange="setSoundOnOff()" checked></span>
  <span style="margin-left:1%;"> &#x2348;<input type="checkbox" id="chVisibleRowOptions" name="chVisibleRowOptions" value="" checked onchange="setRemoveElementsVisibility()"></span>
   <span style="margin-left:1%;"> &#8543;<input type="checkbox" id="chNumericNotation" name="chNumericNotation" value=""  onchange=" setNotation()"></span>
+  <span style="margin-left:1%;">&#127929;<input type="checkbox" id="chKeyboard" name="chKeyboard" value=""  onchange=" setKeyboard()"></span>
 
 </span>
 <span id="spanSpecialOptions" style="float:right;">
 <label id="lblLength"></label><input id="sliderLength" type="range" min="0" max="10000" step="100" value="2000" onchange="setLengthVal()" />
 
-<label id="lblOctave"></label><input id="sliderOctave" type="range" min="0" max="20" step="1" value="5" onchange="setOctaveVal()" />
+<label id="lblOctave"></label><input id="sliderOctave" type="range" min="0" max="8" step="1" value="5" onchange="setOctaveVal()" />
 
  <span style=" " id="spanPlayMode"> Play-mode<input type="checkbox" id="chPlay" name="chPlay" value=""   onchange="setPlayMode()"></span>
   <span style=" " id="spanPlayMode"> Write-mode<input type="checkbox" id="chWrite" name="chWrite" value=""   onchange=""></span>
@@ -152,6 +153,34 @@ input[type="file"] {
     <th id="thRemoveRow" class="removeElement" onclick="setHeaderDetail()" ><b hidden>X  </b></th>
 
   </tr>  
+  
+  
+  
+    <tr style="background-color:silver;border:solid slategrey" id="trSheetPianoForm">
+      <th id="thMainRowActions"> <input type="button" id="btnAddRow" name="btnAddRow" onclick="addRow()" value="+"> </th>
+    <th  id="thK" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,0 ,currentOctave,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,0 ,currentOctave,currentLength); "  style="background-color:red;">1</th>
+      <th  id="thJ" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,2 ,currentOctave,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,2 ,currentOctave,currentLength);" >2</th>
+  <th  id="thL" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,4 ,currentOctave,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,4 ,currentOctave,currentLength); " >3</th>
+       <th  id="thI" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,5 ,currentOctave,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,5 ,currentOctave,currentLength);" >4</th>
+   <th  id="thM" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,7 ,currentOctave,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,7 ,currentOctave,currentLength); " >5</th>
+      <th   id="thH" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,9 ,currentOctave,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,9 ,currentOctave,currentLength); ">6</th>
+  <th   id="thN" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,11 ,currentOctave,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,11 ,currentOctave,currentLength); ">7</th>
+      <th  id="thG" style="background-color:red;" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,0 ,currentOctave+1,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,0 ,currentOctave+1,currentLength); ">1*</th>
+  <th  id="thO" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,2 ,currentOctave+1,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,2 ,currentOctave+1,currentLength);"  >2*</th>
+  	    <th  id="thF" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,4 ,currentOctave+1,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,4 ,currentOctave+1,currentLength); ">3*</th>
+  <th  id="thP" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,5 ,currentOctave+1,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,5 ,currentOctave+1,currentLength); " >4*</th>
+       <th  id="thE" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,7 ,currentOctave+1,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,7 ,currentOctave+1,currentLength); ">5*</th>
+   <th   id="thQ"  onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,9 ,currentOctave+1,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,9 ,currentOctave+1,currentLength); "  >6*</th>
+      <th  id="thD" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,11 ,currentOctave+1,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,11 ,currentOctave+1,currentLength); ">7*</th>
+  <th  id="thR" style="background-color:red;" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,0 ,currentOctave+2,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,0 ,currentOctave+2,currentLength); " >1**</th>
+      <th  id="thC" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,2 ,currentOctave+2,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,2 ,currentOctave+2,currentLength); ">2**</th>
+  <th  id="thS" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,4 ,currentOctave+2,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,4 ,currentOctave+2,currentLength); " >3**</th> 
+     <th class="extraOctaveThree" id="thB" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,5 ,currentOctave+2,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,5 ,currentOctave+2,currentLength); ">4**</th> 
+ <th  id="thT"onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,7 ,currentOctave+2,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,7 ,currentOctave+2,currentLength); "  class="extraOctaveThree">5**</th>
+   	      <th class="extraOctaveThree" id="thA" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,9 ,currentOctave+2,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,9 ,currentOctave+2,currentLength); ">6**</th>  <!--  playInstrument(PresetList[0],3 ,currentOctave+2,currentLength);  -->
+   <th  id="thU" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,11 ,currentOctave+2,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,11 ,currentOctave+2,currentLength); " class="extraOctaveThree">7**</th>
+    <th id="thRemoveRow" class="removeElement" onclick="setHeaderDetail()" ><b hidden>X  </b></th>
+  </tr>   
 </table>
 </span>
 
@@ -324,8 +353,8 @@ indexR+=1;
 });
     $('tr').removeClass('active'); 
         $(rowObj).addClass('active');
-
-  if(indexR <=1)
+ 
+  if(indexR <=2)
  {return false;}
 
  var prev = rowObj.previousSibling;
@@ -426,6 +455,55 @@ isNumericNotation=false;noteSortArray=noteSortDefaultArray;
  
 }
 }
+
+function setKeyboard(isSkipTxtANotes, isNotSkipGenerateSheet)
+{
+var isCh=$('#chKeyboard').is(':checked');
+if(isCh)
+{  
+$("#trSheet").hide();
+$("#trSheetPianoForm").show();
+
+KalimbaHeaderNotes= [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+	"1*",
+    "2*",
+    "3*",
+    "4*",
+    "5*",
+    "6*",
+    "7*",
+    "1**",
+    "2**",
+    "3**",
+    "4**",
+    "5**",
+    "6**",
+    "7**"
+]
+ 
+KalimbaAltHeaderNotes= ["C","D","E","F","G","A","B","C*","D*","E*","F*","G*","A*","B*","C**","D**","E**","F**","G**","A**","B**"];
+
+}
+else{  
+
+ $("#trSheetPianoForm").hide(); 
+ $("#trSheet").show();
+   KalimbaHeaderNotes= ["6**","4**","2**","7*","5*","3*","1*","6","4","2","1","3","5","7","2*","4*","6*","1**","3**","5**","7**"];
+KalimbaAltHeaderNotes= ["A**","F**","D**","B*","G*","E*","C*","A","F","D","C","E","G","B","D*","F*","A*","C**","E**","G**","B**"];
+}
+
+if(!isNotSkipGenerateSheet){
+if(generateSheet(isSkipTxtANotes )){setVisualThreeScales();}else{ setTimeout(function(){ $('#chKeyboard').prop('checked', !isCh); setKeyboard(isSkipTxtANotes, true);} , 100,isCh);} 
+}
+
+}
 function setSoundOnOff()//REF: https://graphemica.com/characters/tags/sound
 {
 if($('#chSilence').is(':checked'))
@@ -451,7 +529,7 @@ function setHeader(headerArray)
 function setHeaderDetail()
 {
 //$("th").css({"backgroundColor": "black", "color": "white"}); cool theme!!
-  var headerName = prompt("Set the (21) header columns:", "A**,F**,D**,B*,G*,E*,C*,A,F,D,C,E,G,B,D*,F*,A*,C**,E**,G**,B**");
+  var headerName = prompt("Set the (21) header columns:",KalimbaAltHeaderNotes.join(','));
 
 if (headerName == null || headerName == "") {
 //no interaction
@@ -466,7 +544,19 @@ setHeader(headerNameList);
    $(".removeElement").show();
 
  mostRecentRowId= uuidv4();
- var lineInfo= '<tr id="'+mostRecentRowId+'" style="height:25px;" class="LineSheet"><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="addOrRemoveLinkLine(this)" > </td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td  id="td_'+mostRecentRowId+'_'+uuidv4()+'"class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td style="font-size:100%;"class="removeElement"><span onclick=" shiftRowUp(this)"  id="u_'+mostRecentRowId+'">^&nbsp;</span> <span   onclick=" shiftRowDown(this)" id="d_'+mostRecentRowId+'">&nbsp;v&nbsp;</span><span  onclick="RemoveLine(this)" style="color:red; ">&nbsp;x</span></td></tr>';
+ var lineInfo;
+ if($('#chKeyboard').is(':checked'))
+ { 
+  lineInfo= '<tr  id="'+mostRecentRowId+'" style="height:25px;" class="LineSheet"><td  id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="addOrRemoveLinkLine(this)" > </td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td  style="background-color:red;"  id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'"  onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td   style="background-color:red;" id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'"onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td  id="td_'+mostRecentRowId+'_'+uuidv4()+'"class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td onclick="playRow(this.parentNode)"   style="font-size:100%;"class="removeElement"><span onclick=" shiftRowUp(this)"  id="u_'+mostRecentRowId+'">^&nbsp;</span> <span   onclick=" shiftRowDown(this)" id="d_'+mostRecentRowId+'">&nbsp;v&nbsp;</span><span  onclick="RemoveLine(this)" style="color:red; ">&nbsp;x</span></td></tr>';
+
+ if($('#chThreeOctaves').is(':checked')){
+
+  lineInfo= '<tr  id="'+mostRecentRowId+'" style="height:25px;" class="LineSheet"><td  id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="addOrRemoveLinkLine(this)" > </td><td  style="background-color:red;" id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td   id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td  style="background-color:red;" id="td_'+mostRecentRowId+'_'+uuidv4()+'"  onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'"onclick="changeNoteContent(this)"></td><td  style="background-color:red;" id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td  id="td_'+mostRecentRowId+'_'+uuidv4()+'"class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td onclick="playRow(this.parentNode)"   style="font-size:100%;"class="removeElement"><span onclick=" shiftRowUp(this)"  id="u_'+mostRecentRowId+'">^&nbsp;</span> <span   onclick=" shiftRowDown(this)" id="d_'+mostRecentRowId+'">&nbsp;v&nbsp;</span><span  onclick="RemoveLine(this)" style="color:red; ">&nbsp;x</span></td></tr>';
+}
+ }
+ else{
+ lineInfo= '<tr id="'+mostRecentRowId+'" style="height:25px;" class="LineSheet"><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="addOrRemoveLinkLine(this)" > </td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" style="background-color:red;" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" onclick="changeNoteContent(this)"></td><td  id="td_'+mostRecentRowId+'_'+uuidv4()+'"class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td id="td_'+mostRecentRowId+'_'+uuidv4()+'" class="extraOctaveThree" onclick="changeNoteContent(this)"></td><td  onclick="playRow(this.parentNode)"  style="font-size:100%;"class="removeElement"><span onclick=" shiftRowUp(this)"  id="u_'+mostRecentRowId+'">^&nbsp;</span> <span   onclick=" shiftRowDown(this)" id="d_'+mostRecentRowId+'">&nbsp;v&nbsp;</span><span  onclick="RemoveLine(this)" style="color:red; ">&nbsp;x</span></td></tr>';
+  }
   if(!$('#chAddLineToBottom').is(':checked')) // starts from bottom means new value added to top 
 {  $('#tblSheet').append(lineInfo);
 }else{  $('#trSheet').after(lineInfo);
@@ -478,13 +568,13 @@ setRemoveElementsVisibility();
   function exportTab()
   {$('tr').removeClass('active');
   var filename = prompt("Export entire tab as name:", "kalimbaTab");
-
+ 
 if (filename == null || filename == "") {
 //no interaction
 } else {
   var content= $("#tblSheet").html(); //REF: https://stackoverflow.com/questions/42968097/how-to-save-html-page-content-in-txt-file-using-javascript
       var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content) );
     element.setAttribute('download', filename+".ktc");
 
     element.style.display = 'none';
@@ -506,7 +596,36 @@ if (filename == null || filename == "") {
          var fileReader = new FileReader();
         fileReader.onload = function(event) {
           $('#tblSheet').html(event.target.result);
-		          document.getElementById('ktcImport').value = null;
+				  
+ 
+				 console.log($("#trThreeOctIsChecked").find("td:first").html()  )  
+				 
+				 if($("#trThreeOctIsChecked").find("td:first").html()  =="false")
+				 {
+				 				 $("#chThreeOctaves").prop('checked', false);
+
+				 }
+				 else  {
+				 				 $("#chThreeOctaves").prop('checked',  true);
+
+				 }
+ 				
+				
+				 if($("#trKeyboardIsChecked").find("td:first").html()  =="false")
+				 {
+				 				 $("#chKeyboard").prop('checked', false);
+
+				 }
+				 else  {
+				 				 $("#chKeyboard").prop('checked',  true);
+
+				 }
+ 				 
+				// $("#chThreeOctIsChecked").remove();
+				 //$("#chKeyboardIsChecked").remove();
+				 
+ 		          document.getElementById('ktcImport').value = null;
+				  setKeyboard(true);
 
         }
         var file = event.target.files[0];
@@ -553,15 +672,18 @@ if($('#chVisibleRowOptions').is(':checked'))
   
   var isBreakByNewPlayQuery=false;
   var timeoutPlayQuery; 
-    function playSheet()
+    function playSheet(customRow)
   {   
   
   playInstrument(undefined,activeSound,11 ,7,0);// hack counts as "button press" so the first note in the series gets triggered
     playInstrument(undefined,activeSound,11 ,6,0);
   playInstrument(undefined,activeSound,11 ,5,0);//3 scales (all notes are already loaded by loadinstrument()
 
-   var msSpeed = prompt("Lines following up in ms:", "1500");//refinement in each line later (based on each notesort & noteline).
+   var msSpeed=200;
 
+if(typeof customRow == "undefined")
+{   msSpeed= prompt("Lines following up in ms:", "1500");//refinement in each line later (based on each notesort & noteline).
+}
 if (msSpeed == null || msSpeed == "") {
 //no interaction
 } else {
@@ -573,7 +695,19 @@ $("#pDummyConvert").html(noteSortArray[0]);
    isBreakByNewPlayQuery=false;
 clearTimeout(timeoutPlayQuery);
 
-var rowS=   $('#tblSheet tr');
+var rowS ;
+ 
+ if(typeof customRow != "undefined")
+{
+    rowS=   $('#tblSheet').find(customRow);
+
+}
+else
+{
+  rowS=   $('#tblSheet tr');
+
+}
+
  if( $('#chAddLineToBottom').is(':checked')) // starts from bottom means new value added to top 
 { 
 jQuery.fn.reverse = [].reverse;//REF: https://stackoverflow.com/questions/1394020/jquery-each-backwards
@@ -585,19 +719,93 @@ rowS.reverse();
    
 setLengthVal();
 
-   $(this).find('td').each(function (i,tdr) {
+var keyModifier = 0; 
+		if(!$('#chThreeOctaves').is(':checked'))
+		{
+		keyModifier=2;
+		}
+		
+   $("#"+rowObj.id).find('td').each(function (i,tdr) {
    
- 
+ var isKeybChecked=$('#chKeyboard').is(':checked');
    timeoutPlayQuery=	setTimeout(() => {
       $('tr').removeClass('active'); 
         $(rowObj).addClass('active');
-   if(isBreakByNewPlayQuery){stopInstrument( 0); return false;} //might work differently now with multiple soundplayers.
+		
+		
+    if(isBreakByNewPlayQuery){stopInstrument( 0); return false;} //might work differently now with multiple soundplayers.
 
-console.log($(tdr).html().trim()+"=="+ $("#pDummyConvert").html())	
-
-
-console.log(noteSortDefaultArray);
-	
+ 		
+if(isKeybChecked)
+		{
+		
+		if($(tdr).html().trim() != ""  && i ==1+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==1)
+		{		 playInstrument(undefined,activeSound,0 ,currentOctave,currentLength); 
+			} 
+			  if($(tdr).html().trim() != "" &&   i ==2+keyModifier)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==2)
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave,currentLength); 
+			}
+	  if($(tdr).html().trim() != ""   && i ==3+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==3)
+		{		 playInstrument(undefined,activeSound,4 ,currentOctave,currentLength); 
+			}
+			  if($(tdr).html().trim() != ""   && i ==4+keyModifier)//if(noteSortArray.indexOf($(tdr).html().trim()).length > -1 && && i ==4)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==4)
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave,currentLength); 
+			}
+		 	  if($(tdr).html().trim() != ""   && i ==5+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==5)
+		{		 playInstrument(undefined,activeSound,7 ,currentOctave,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==6+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==6)
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave,currentLength); 
+			}
+					  if($(tdr).html().trim() != ""   && i ==7+keyModifier)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==7)//1*
+		{		 playInstrument(undefined,activeSound,11 ,currentOctave,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==8+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==8)
+		{		 playInstrument(undefined,activeSound,0 ,currentOctave+1,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==9+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==9)
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave+1,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==10+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==10)
+		{		 playInstrument(undefined,activeSound,4 ,currentOctave+1,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==11+keyModifier)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==11)
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave+1,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==12+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==12)
+		{		 playInstrument(undefined,activeSound,7 ,currentOctave+1,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==13+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==13)
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave+1,currentLength); 
+			}
+			  if($(tdr).html().trim() != ""   && i ==14+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==14)//7
+		{		 playInstrument(undefined,activeSound,11 ,currentOctave+1,currentLength); 
+			}
+			  if($(tdr).html().trim() != ""   && i ==15+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==15)
+		{		 playInstrument(undefined,activeSound,0 ,currentOctave+2,currentLength); 
+			}
+			  if($(tdr).html().trim() != ""   && i ==16+keyModifier)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==16)
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave+2,currentLength); 
+			}
+			  if($(tdr).html().trim() != ""   && i ==17+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==17)
+		{		 playInstrument(undefined,activeSound,4 ,currentOctave+2,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==18&& $('#chThreeOctaves').is(':checked') )//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==18)
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave+2,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==19 && $('#chThreeOctaves').is(':checked'))//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==19)
+		{		 playInstrument(undefined,activeSound,7 ,currentOctave+2,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==20 && $('#chThreeOctaves').is(':checked'))//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==20)
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave+2,currentLength); 
+			}
+				  if($(tdr).html().trim() != ""   && i ==21 && $('#chThreeOctaves').is(':checked') )//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==21)
+		{		 playInstrument(undefined,activeSound,11 ,currentOctave+2,currentLength); 
+			}
+			
+ 		 
+		}
+else{		
 		if($(tdr).html().trim() != ""  && i ==1)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==1)
 		{		 playInstrument(undefined,activeSound,9 ,currentOctave+2,currentLength); 
 			} 
@@ -661,8 +869,10 @@ console.log(noteSortDefaultArray);
 				  if($(tdr).html().trim() != ""   && i ==21)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==21)
 		{		 playInstrument(undefined,activeSound, 11 ,currentOctave+2,currentLength); 
 			}
-			
-				}, playINTERVAL*index);//NOT i!
+			}
+				}, playINTERVAL*index +((i+1) *15),i,tdr,isKeybChecked);//NOT i!
+				
+				
 
 });});
   }} 
@@ -730,6 +940,7 @@ if($('#chThreeOctaves').is(':checked'))
 }
 else{  $(".extraOctaveThree").hide();
 }
+
 }
 
 function noteAutomaticNotePlacement(combinedNotesAsString,tableRow)
@@ -742,7 +953,110 @@ var  combinedNotes =  combinedNotesAsString.split(",");
 console.log("=>" +convertedNote);
  //processing this row
         //how to process each cell(table td) where there is checkbox
+		
+		var keyModifier = 0; 
+		if(!$('#chThreeOctaves').is(':checked'))
+		{
+		keyModifier=2;
+		}
+		
         $("#"+tableRow).find('td').each(function (i,tdr) { 
+		
+		if($('#chKeyboard').is(':checked'))
+		{
+		
+		
+		if(convertedNote == "C" && i ==1+keyModifier)
+		{		$(tdr).html(noteSortArray[0] );
+			}
+				else if(convertedNote == "D" && i ==2+keyModifier)
+		{		
+		if(isNumericNotation){$(tdr).html(noteSortNumericArray[3] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+			}
+				else if(convertedNote == "E" && i ==3+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[1] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				else if(convertedNote == "F" && i ==4+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[6] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				else if(convertedNote == "G" && i ==5+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[4] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				else if(convertedNote == "A" && i ==6+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[2] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "B" && i ==7+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[0] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "C*" && i ==8+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[5] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "D*" && i ==9+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[3] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "E*" && i ==10+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[1] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "F*" && i ==11+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[0] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "G*" && i ==12+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[2] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "A*" && i ==13+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[4] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "B*" && i ==14+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[6] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				else if(convertedNote == "C**" && i ==15+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[1] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				else if(convertedNote == "D**" && i ==16+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[3] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				else if(convertedNote == "E**" && i ==17+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[5] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				else if(convertedNote == "F**" && i ==18+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[0] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				 	else if(convertedNote == "G**" && i ==19+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[2] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "A**" && i ==20+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[4] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+			else if(convertedNote == "B**" && i ==21+keyModifier)
+		{				if(isNumericNotation){$(tdr).html(noteSortNumericArray[6] );}else{		$(tdr).html(noteSortDefaultArray[0] );}
+
+			}
+				else if(  i ==22 )
+		{		
+		$(tdr).html('<span onclick=" shiftRowUp(this)"  id="u_'+mostRecentRowId+'">^&nbsp;</span> <span   onclick=" shiftRowDown(this)" id="d_'+mostRecentRowId+'">&nbsp;v&nbsp;</span><span  onclick="RemoveLine(this)" style="color:red; ">&nbsp;x</span>');
+			}			
+			 
+		}
+		
+		else{
 		if(convertedNote == "A**" && i ==1)
 		{		$(tdr).html(noteSortArray[0] );
 			}
@@ -834,12 +1148,27 @@ console.log("=>" +convertedNote);
 			//$(this).html("test");
 
 			}
-
+			}
 		});}
 }
-function generateSheet()
+function generateSheet(isSkipTxtANotes)
 {
 
+var isOkToGenerate= true;
+
+        if($('#tblSheet tr').length >2)
+		{
+		if (confirm('Are you sure to alter the sheet? Written notes will be erased!')) {
+  isOkToGenerate= true;
+} else {
+   isOkToGenerate= false;
+} 
+		}
+
+if(!isOkToGenerate)
+{
+return isOkToGenerate;
+}
 
 var txtAreaInfo= document.getElementById("txtANotes").value.trim().replace(/(\r\n|\n|\r)/gm," "); 
 var txtAreaInfoArray = txtAreaInfo.split(" ");
@@ -857,6 +1186,7 @@ var txtAreaInfoArray = txtAreaInfo.split(" ");
 
   }==> Handled in addrow()*/ 
 
+if(!isSkipTxtANotes){
  	 $(".extraOctaveThree").show();
 
     $('#tblSheet tr').each(function () {
@@ -938,14 +1268,25 @@ isCombComplete=false;}
 });
 
 
-
+}
  }
 }
 
 setVisualThreeScales();
 
+$("#trThreeOctIsChecked").remove();
+$("#trKeyboardIsChecked").remove();  
+
+$('#tblSheet').append('<tr id="trThreeOctIsChecked" hidden><td>' +$('#chThreeOctaves').is(':checked')+'</td></tr>');
+$('#tblSheet').append('<tr id="trKeyboardIsChecked" hidden><td>'+$('#chKeyboard').is(':checked')+'</td></tr>');
+
+return isOkToGenerate;
+
 }
 
+ 
+ var multiTouchcounter= 0;  // multitouchandler added on 04/07/2022
+  var timeoutMultiTouchcounter;
 
 
 var touchtime = 0;
@@ -968,7 +1309,10 @@ $("#txtANotes").on("click", function() {//REF:https://stackoverflow.com/question
     }}
 });
 
-
+function playRow(Row)
+{
+  playSheet(Row);
+}
  
  
 
@@ -980,6 +1324,7 @@ $("#txtANotes").on("click", function() {//REF:https://stackoverflow.com/question
 $( document ).ready(function() {
     setVisualThreeScales();  
 	setSoundOnOff();
+	setKeyboard();
 	
 				LoadInstruments();
 				
@@ -1003,8 +1348,7 @@ var touch = e.touches[i];
                 if (itemElement   && lastHoverObjects[i]!= itemElement) {  lastHoverObjects[i]= itemElement;
 				if(itemElement.id.indexOf("th") >-1){
                     // interact with the DOM element
-                    console.log(itemElement);
-					
+ 					
 					itemElement.click();
 				//	$(itemElement).effect( "highlight", {times:3,color: 'aliceblue'}, 1000 );
 } 
@@ -1032,6 +1376,17 @@ var touch = e.touches[i];
                  
                 
 							} }
+
+			});
+
+			tblSheet.addEventListener("touchend", function(e) { 
+
+   if (e.touches.length <=0){
+   
+   multiTouchcounter= 0;
+   clearTimeout(timeoutMultiTouchcounter);
+
+  }
 
 			});
 
@@ -1069,19 +1424,19 @@ var sharpTonesIndexList=[1,3,5,7,9,11];
   function stopInstrument(x,timeouttime=0){setTimeout(function(){x.cancelQueue(audioContext);}, timeouttime);}
   
   var mobileTimeBlock = false; // maybe bug, but click goes x2. This bool counts as a hinder.
+  
   function playInstrument(objectElement, name,notenumber = 12, octave=8,time=0){
   
   if(mobileTimeBlock){ return;}else{mobileTimeBlock=true;setTimeout(function(){ mobileTimeBlock=false; }, 10);}
  var p=new WebAudioFontPlayer();
   
-  console.log(objectElement);
-  
+   
 
   if(objectElement !== undefined){
         lastClickedCol =$(objectElement).index();// $('th').index();
     var $tr = $(objectElement).closest('tr');
       lastClickedRow = $tr.index();
-console.log(lastClickedCol);
+ 
 
   if( $('#chWrite').is(':checked') && lastClickedCol-1 > -1)
 {  console.log(KalimbaHeaderNotes[lastClickedCol-1]);
@@ -1090,6 +1445,10 @@ $("#txtANotes").val($("#txtANotes").val()+" " + KalimbaHeaderNotes[lastClickedCo
 
   if(isMute){return false;}
   
+  clearTimeout(timeoutMultiTouchcounter);
+  
+  					setTimeout(function(){ 					 
+
 			p.loader.decodeAfterLoading(audioContext, name.toString());// alt _tone_0750_Chaos_sf2_file
 				p.loader.waitLoad(function () {		//instr=window[ name.toString()];	=> req?
 				selectedPreset= name;  
@@ -1103,7 +1462,13 @@ $("#txtANotes").val($("#txtANotes").val()+" " + KalimbaHeaderNotes[lastClickedCo
 
 									stopInstrument(p,time); 
 									
+									},50*multiTouchcounter,p,objectElement, name,notenumber , octave ,time )
+									
 									}); 
+									
+									multiTouchcounter+=100; 
+									timeoutMultiTouchcounter=setTimeout(function(){ multiTouchcounter=0;},multiTouchcounter )
+									
 					}
 function LoadInstruments(){
 for(let i = 0; i < PresetList.length; i++){
@@ -1112,6 +1477,7 @@ for (z = 0; z < 13; z++) {// 0-12 range
 playInstrument(this,PresetList[i],z ,g);
 }}}	}	
 
+document.getElementById("tblSheet").addEventListener('contextmenu', event => event.preventDefault());
 
 			
   </script>
