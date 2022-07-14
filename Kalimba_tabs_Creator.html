@@ -1659,10 +1659,15 @@ $('#sliderOctave').val(currentOctave );
        break;
        case "b":
 	   
-	   if(parseFloat($('#sliderLength').val( )) >250)
+	   if(parseFloat($('#sliderLength').val( )) >0)
 	   {
-	    $('#sliderLength').val( parseFloat($('#sliderLength').val( ))-250);
-		currentLength=parseFloat($('#sliderLength').val( ));
+	   var feed=  parseFloat($('#sliderLength').val( ))-250;
+	   if (feed < 0)
+	   {
+	   feed=0;
+	   }
+	    $('#sliderLength').val( feed);
+		currentLength=feed;
 	   }
 	 setLengthVal();
 
@@ -1789,10 +1794,15 @@ $('#sliderOctave').val(currentOctave );
  }
 else if( i ==23 && i == noteMidi)
  {
-	   if(parseFloat($('#sliderLength').val( )) >250)
+	   if(parseFloat($('#sliderLength').val( )) >0)
 	   {
-	    $('#sliderLength').val( parseFloat($('#sliderLength').val( ))-250);
-		currentLength=parseFloat($('#sliderLength').val( ));
+	   var feed=  parseFloat($('#sliderLength').val( ))-250;
+	   if (feed < 0)
+	   {
+	   feed=0;
+	   }
+	    $('#sliderLength').val( feed);
+		currentLength=feed;
 	   }
 	 setLengthVal();
 
