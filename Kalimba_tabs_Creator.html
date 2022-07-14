@@ -76,7 +76,7 @@ input[type="file"] {
   border:1px black solid;
   padding:1px;
 }
-
+#txtDetuneAmount{ width:35px;}
 </style>
 </head>
 <body class="noselect" onclick="">
@@ -103,6 +103,11 @@ input[type="file"] {
   <option value="_tone_0670_SBLive_sf2">Sax</option>
   <option value="_tone_1060_SBLive_sf2">Shamisen</option>
 </select>
+
+</span> 
+<span id="sDetune">
+  <label for="txtDetuneAmount" id="lblDetuneAmount">Detune:</label>
+  <input type="number" value="0"  step="0.1" min="0" max="0.9"id="txtDetuneAmount" name="txtDetuneAmount" onchange="setDetune()"> 
 </span> 
 
 
@@ -485,6 +490,11 @@ $(".removeElement").hide();
 }
 }
 
+function setDetune()
+{
+detuneAmount=  parseFloat(parseFloat($("#txtDetuneAmount").val()).toFixed(1));
+ 
+}
 function setNotation()
 {
 if($('#chNumericNotation').is(':checked'))
@@ -1439,6 +1449,7 @@ window.location.replace(window.location.href.split("?_tone")[0]+"?"+sel.options[
   <script>
   var isHalfTonesSelected= false; 
 var currentOctave= 5; 
+var detuneAmount=0.0;
 var currentLength= 2000; 
 
 			var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
@@ -1493,13 +1504,13 @@ $("#txtANotes").val($("#txtANotes").val()+" " + KalimbaHeaderNotes[lastClickedCo
 
    				 //	setTimeout(function(){ 					 
 
-				p.loader.waitLoad(function () {		//instr=window[ name.toString()];	=> req?
+				//p.loader.waitLoad(function () {		//instr=window[ name.toString()];	=> req?
 				selectedPreset= name;  
 				
 				if(activeSound==PresetList[0] || activeSound==PresetList[2]){console.log("Sound sound activated");
-				envelope=p.queueWaveTable(audioContext, audioContext.destination					, selectedPreset, 0, notenumber +12 *octave, time);}
+				envelope=p.queueWaveTable(audioContext, audioContext.destination					, selectedPreset, 0,detuneAmount+ notenumber +12 *octave, time);}
 				else{ console.log("Sound B activated");
-				envelope=p.queueWaveTable(audioContext, audioContext.destination					, selectedPreset, 0, notenumber +12 *octave, time);// notenumber=> 0 till and with 12. ex:https://surikov.github.io/webaudiofontdata/sound/0090_Aspirin_sf2_file.html
+				envelope=p.queueWaveTable(audioContext, audioContext.destination					, selectedPreset, 0, detuneAmount+ notenumber +12 *octave, time);// notenumber=> 0 till and with 12. ex:https://surikov.github.io/webaudiofontdata/sound/0090_Aspirin_sf2_file.html
 
 				}
 				
@@ -1507,7 +1518,7 @@ setTimeout(function(){ 	envelope.cancel();},time,envelope); //REF: https://githu
 
 									stopInstrument(p,time+1000); 
 									
-																		},0,p,objectElement, name,notenumber , octave ,time )//},50,p,objectElement, name,notenumber , octave ,time )
+																	//	},0,p,objectElement, name,notenumber , octave ,time )//},50,p,objectElement, name,notenumber , octave ,time )
 									///Note: random for multiple notes to make them sound at the same time hearable.
 								 	//},1); 
 									
@@ -1664,6 +1675,25 @@ break;
 	   }
 	 setLengthVal();
 break;
+
+       case "x":
+	   
+	   if(detuneAmount <0.9){
+	   detuneAmount +=0.1;
+	   	  detuneAmount=parseFloat(detuneAmount.toFixed(1));
+	   $("#txtDetuneAmount").val(detuneAmount)
+//setDetune();
+}
+break;
+       case "w":
+	   
+	   if(detuneAmount > 0.0){
+	   detuneAmount -=0.1;
+	   	  detuneAmount=parseFloat(detuneAmount.toFixed(1));
+	   $("#txtDetuneAmount").val(detuneAmount)
+//setDetune();
+}
+break;
     default:
       return; // Quit when this doesn't handle the key event.
   }
@@ -1727,7 +1757,7 @@ tableTr=$("#trSheetPianoForm th");
         case 144: // noteOn message 
           //   important:  noteMidi, velocity ;
 		  
-  for (var i = 0; i< tableTr.length+2; i++) {//+2 to calc sound lenght.
+  for (var i = 0; i< tableTr.length+4; i++) {//+2 to calc sound lenght. +2 for detune
  
  
  
@@ -1768,8 +1798,26 @@ else if( i ==23 && i == noteMidi)
 	   }
 	 setLengthVal();
 
+ } 
+ 
+else if( i ==25 && i == noteMidi)
+ {	   
+	   if(detuneAmount <0.9){
+	   detuneAmount +=0.1;
+	   	  detuneAmount=parseFloat(detuneAmount.toFixed(1));
+	   $("#txtDetuneAmount").val(detuneAmount)
  }
- else  if(  i == noteMidi  &&  i < 21)
+}  
+else if( i ==26 && i == noteMidi)
+ {	
+	   
+	   if(detuneAmount > 0.0){
+	   detuneAmount -=0.1;
+	   	  detuneAmount=parseFloat(detuneAmount.toFixed(1));
+	   $("#txtDetuneAmount").val(detuneAmount)
+}  
+}
+  else  if(  i == noteMidi  &&  i < 21)
    {
  	  	  if( tableTr[i+1].style.display !="none") { // there is nothing on the 0th table
 		  var feed=   tableTr[i+1];
