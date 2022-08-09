@@ -728,11 +728,12 @@ if($('#chVisibleRowOptions').is(':checked'))
     function playSheet(customRow)
   {   
   
-  playInstrument(undefined,activeSound,11 ,7,0);// hack counts as "button press" so the first note in the series gets triggered
+  // items commented out due to wrong action in multi-note trigger in partiture play. 09/08/2022
+  /*playInstrument(undefined,activeSound,11 ,7,0);// hack counts as "button press" so the first note in the series gets triggered
     playInstrument(undefined,activeSound,11 ,6,0);
   playInstrument(undefined,activeSound,11 ,5,0);//3 scales (all notes are already loaded by loadinstrument()
-
-   var msSpeed=200;
+*/
+   var msSpeed=50;//200;
 
 if(typeof customRow == "undefined")
 {   msSpeed= prompt("Lines following up in ms:", "1500");//refinement in each line later (based on each notesort & noteline).
