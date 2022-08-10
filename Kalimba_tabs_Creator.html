@@ -16,10 +16,10 @@ table { /* REF: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_table_
     font-family: "Segoe UI Symbol";/* ref: https://stackoverflow.com/questions/54277837/unicode-displaying-strange-in-edge*/
   border-collapse: collapse;
   width: 100%;
-   height: 50px;
+   height: 100%;
   overflow:scroll;
 }
-
+#sFScreen{background-color:white;  }
 td, th {
   border: 1px solid #dddddd;
   text-align: center;
@@ -76,11 +76,13 @@ input[type="file"] {
   border:1px black solid;
   padding:1px;
 }
-#txtDetuneAmount{ width:35px;}
+#sliderDetuneAmount{ width:85px;}
 </style>
 </head>
 <body class="noselect" onclick="">
- <input type="button" id="btnHelp" name="btnHelp" onclick="$('#spanMusic').toggle();$('#spanHelp').toggle();" value="?" style="float: right; position absolute; margin:5px;">
+ <input type="button" id="btnHelp" name="btnHelp" onclick="$('#spanMusic').toggle();$('#spanHelp').toggle();" value="?" style="float: right;   margin:5px;">
+ <input style="float: right;   margin:5px;" type="button" id="btnFullScreen" name="btnFullScreen" onclick=" setFullScreen()" value="[-]">   
+
 <div id="divMain"> 
 <h2>Kalimba Tabs Creator</h2>  <!-- REF: https://kalimbatime.com/free-kalimba-tabs-template/ -->
  
@@ -91,9 +93,35 @@ input[type="file"] {
  <label for="ktcImport" class="custom-file-upload">
     &uarr;
  <input type="file" id="ktcImport"  style=" margin-left: auto; margin-right: auto;"   />
+ 
 </label>
 
-<span id="sInstrument" style="margin-left:35px;">
+
+
+ <span style="margin-left:1%;"> 3 &#127932; <input type="checkbox" id="chThreeOctaves" name="chThreeOctaves" value="" onchange="var isCh=$('#chThreeOctaves').is(':checked');if(generateSheet()){setVisualThreeScales();}else{ setTimeout(function(){ $('#chThreeOctaves').prop('checked', !isCh); } , 100,isCh);} "></span>
+ <span style="margin-left:1%;"> <label id="lblSilence">&#128263;</label> <input type="checkbox" id="chSilence" name="chSilence" value="" onchange="setSoundOnOff()" checked></span>
+ <span style="margin-left:1%;"> &#x2348;<input type="checkbox" id="chVisibleRowOptions" name="chVisibleRowOptions" value="" checked onchange="setRemoveElementsVisibility()"></span>
+  <span style="margin-left:1%;"> &#8543;<input type="checkbox" id="chNumericNotation" name="chNumericNotation" value=""  onchange=" setNotation()"></span>
+  <span style="margin-left:1%;">&#127929;<input type="checkbox" id="chKeyboard" name="chKeyboard" value=""  onchange=" setKeyboard()"></span>
+
+ <p hidden id="pDummyConvert"> </p></span>
+ 
+   <input type="button" id="btnPlaySheet" name="btnPlaySheet"  style="float:right;" onclick="playSheet()"  value="|>">  
+  <input type="button" id="btnNotes" name="Notes" style="float:right;" onclick="generateSheet()" value="Generate"> 
+
+
+<textarea id="txtANotes" rows="1" cols="25" style="float:right;" >E** A* B 2** 1* (3 4) 1** [4 E 5**]</textarea>
+
+ 
+<br><br>
+
+
+
+</span>
+<span id="sFScreen"  >
+
+<span id="spanInstruInfluencers">
+ <span id="sInstrument">
 <label for="lblInstr">Instrument:</label>
 <select name="selInstru" id="sInstru" onchange="alterInstrument(this)">
    <option value="_tone_1080_SBLive_sf2">Kalimba</option>
@@ -105,45 +133,36 @@ input[type="file"] {
   <option value="_tone_1060_SBLive_sf2">Shamisen</option>
 </select>
 
-</span> 
+</span>  
+
+
+<span id="spanMainToneShifters">
 <span id="sDetune">
-  <label for="txtDetuneAmount" id="lblDetuneAmount">Detune:</label>
-  <input type="number" value="0"  step="0.1" min="0" max="0.9"id="txtDetuneAmount" name="txtDetuneAmount" onchange="setDetune()"> 
-</span> 
-
-
- <p hidden id="pDummyConvert"> </p></span>
- 
-   <input type="button" id="btnPlaySheet" name="btnPlaySheet"  style="float:right;" onclick="playSheet()"  value="|>">  
-  <input type="button" id="btnNotes" name="Notes" style="float:right;" onclick="generateSheet()" value="Generate"> 
-
-<textarea id="txtANotes" rows="1" cols="25" style="float:right;" >E** A* B 2** 1* (3 4) 1** [4 E 5**]</textarea>
-   <span  style="float:right;" > empty by click <input type="checkbox" id="chdblClickClear" name="chdblClickClear" value="" onchange=""></span>
-
-<br><br>
-
-
- <span style="margin-left:1%;"> Start at bottom <input type="checkbox" id="chAddLineToBottom" name="chAddLineToBottom" value="" onchange=""></span>
- <span style="margin-left:1%;"> 3 &#127932; <input type="checkbox" id="chThreeOctaves" name="chThreeOctaves" value="" onchange="var isCh=$('#chThreeOctaves').is(':checked');if(generateSheet()){setVisualThreeScales();}else{ setTimeout(function(){ $('#chThreeOctaves').prop('checked', !isCh); } , 100,isCh);} "></span>
- <span style="margin-left:1%;"> <label id="lblSilence">&#128263;</label> <input type="checkbox" id="chSilence" name="chSilence" value="" onchange="setSoundOnOff()" checked></span>
- <span style="margin-left:1%;"> &#x2348;<input type="checkbox" id="chVisibleRowOptions" name="chVisibleRowOptions" value="" checked onchange="setRemoveElementsVisibility()"></span>
-  <span style="margin-left:1%;"> &#8543;<input type="checkbox" id="chNumericNotation" name="chNumericNotation" value=""  onchange=" setNotation()"></span>
-  <span style="margin-left:1%;">&#127929;<input type="checkbox" id="chKeyboard" name="chKeyboard" value=""  onchange=" setKeyboard()"></span>
-
-</span>
-<span id="spanSpecialOptions" style="float:right;">
 <label id="lblLength"></label><input id="sliderLength" type="range" min="0" max="10000" step="100" value="2000" onchange="setLengthVal()" />
 
-<label id="lblOctave"></label><input id="sliderOctave" type="range" min="0" max="8" step="1" value="5" onchange="setOctaveVal()" />
+  <label for="sliderDetuneAmount" id="lblDetuneAmount">Detune: 0.0</label>
+  <input id="sliderDetuneAmount" type="range" min="0.0" max="0.9" step="0.1" value="0" onchange="setDetune()" />
+  <label id="lblOctave"></label><input id="sliderOctave" type="range" min="0" max="8" step="1" value="5" onchange="setOctaveVal()" />
 
- <span style=" " id="spanPlayMode"> Play-mode<input type="checkbox" id="chPlay" name="chPlay" value=""   onchange="setPlayMode()"></span>
-  <span style=" " id="spanPlayMode"> Write-mode<input type="checkbox" id="chWrite" name="chWrite" value=""   onchange=""></span>
-
-   <span style=""><input type="button" id="btnFullScreen" name="btnFullScreen" onclick=" setFullScreen()" value="[-]">  </span>
-<br><br>
-
+</span> 
 </span>
 
+
+ <span id="spanSheetOptions"style="float:right;">
+
+|
+
+ <span style=" " id="spanPlayMode"> &#9654;<input type="checkbox" id="chPlay" name="chPlay" value=""   onchange="setPlayMode()"></span>|
+  <span style=" " id="spanPlayMode"> &#9997;<input type="checkbox" id="chWrite" name="chWrite" value=""   onchange=""></span>|
+   <span > Bottom 1st  <input type="checkbox" id="chAddLineToBottom" name="chAddLineToBottom" value="" onchange=""></span>|
+
+     <span  >Tap 2x = clear <input type="checkbox" id="chdblClickClear" name="chdblClickClear" value="" onchange=""></span>
+
+  </span>
+
+</span>  
+
+ 
 <table id="tblSheet" class="noselect">
   <tr style="background-color:silver;border:solid slategrey" id="trSheet">
       <th id="thMainRowActions"> <input type="button" id="btnAddRow" name="btnAddRow" onclick="addRow()" value="+"> </th>
@@ -201,6 +220,7 @@ input[type="file"] {
     <th id="thRemoveRow" class="removeElement" onclick="setHeaderDetail()" ><b hidden>X  </b></th>
   </tr>   
 </table>
+</span>
 </span>
 
 <span id="spanHelp"  onclick="$('#spanMusic').toggle();$('#spanHelp').toggle();" >
@@ -435,7 +455,7 @@ currentOctave=parseInt($('#sliderOctave').val( ));
 }
 function setFullScreen()
 {
-var elem = document.getElementById("tblSheet");
+var elem = document.getElementById("sFScreen");
 
    if (elem.requestFullscreen) {
     elem.requestFullscreen();
@@ -449,6 +469,25 @@ var elem = document.getElementById("tblSheet");
  
 
 }
+
+window.addEventListener('resize', (evt) => { //ref: https://javascriptf1.com/snippet/detect-fullscreen-mode-with-javascript & https://stackoverflow.com/questions/2863351/checking-if-browser-is-in-fullscreen
+    if (window.innerHeight == screen.height) {
+        
+	   
+	 document.getElementById("sInstrument").style.display = "none";
+    document.getElementById("spanSheetOptions").style.display = "none";
+
+ 
+    } else {
+    document.getElementById("sInstrument").style.display = "inline";
+    document.getElementById("spanSheetOptions").style.display = "inline";
+
+	  
+    }
+});
+
+ 
+
 function setHelp()
 {
 
@@ -466,7 +505,7 @@ $(".LineSheet").show();
  $(".removeElement").show();
  $("#spanKalimbaActions").show();
  $("#thMainRowActions").show();
- $('#tblSheet').css('height', '50px');
+ $('#tblSheet').css('height', '100%');
  
 }
 else{  
@@ -475,7 +514,7 @@ $(".LineSheet").hide();
  $("#spanKalimbaActions").hide();
  $("#thMainRowActions").hide();
 
- $('#tblSheet').css('height', '70%');
+  $('#tblSheet').css('height',window.innerHeight);
  
 }
 
@@ -496,7 +535,10 @@ $(".removeElement").hide();
 
 function setDetune()
 {
-detuneAmount=  parseFloat(parseFloat($("#txtDetuneAmount").val()).toFixed(1));
+detuneAmount=  parseFloat(parseFloat($("#sliderDetuneAmount").val()).toFixed(1));
+if(detuneAmount==0)
+{$("#lblDetuneAmount").html('Detune: ' +$("#sliderDetuneAmount").val()+".0");}
+else{ $("#lblDetuneAmount").html('Detune: ' +$("#sliderDetuneAmount").val());}
  
 }
 function setNotation()
@@ -798,134 +840,134 @@ if(isKeybChecked)
 		{
 		
 		if($(tdr).html().trim() != ""  && i ==1+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==1)
-		{		 playInstrument(undefined,activeSound,0 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,0 ,currentOctave,currentLength,true); 
 			} 
 			  if($(tdr).html().trim() != "" &&   i ==2+keyModifier)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==2)
-		{		 playInstrument(undefined,activeSound,2 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave,currentLength,true); 
 			}
 	  if($(tdr).html().trim() != ""   && i ==3+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==3)
-		{		 playInstrument(undefined,activeSound,4 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,4 ,currentOctave,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==4+keyModifier)//if(noteSortArray.indexOf($(tdr).html().trim()).length > -1 && && i ==4)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==4)
-		{		 playInstrument(undefined,activeSound,5 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave,currentLength,true); 
 			}
 		 	  if($(tdr).html().trim() != ""   && i ==5+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==5)
-		{		 playInstrument(undefined,activeSound,7 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,7 ,currentOctave,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==6+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==6)
-		{		 playInstrument(undefined,activeSound,9 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave,currentLength,true); 
 			}
 					  if($(tdr).html().trim() != ""   && i ==7+keyModifier)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==7)//1*
-		{		 playInstrument(undefined,activeSound,11 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,11 ,currentOctave,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==8+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==8)
-		{		 playInstrument(undefined,activeSound,0 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,0 ,currentOctave+1,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==9+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==9)
-		{		 playInstrument(undefined,activeSound,2 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave+1,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==10+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==10)
-		{		 playInstrument(undefined,activeSound,4 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,4 ,currentOctave+1,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==11+keyModifier)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==11)
-		{		 playInstrument(undefined,activeSound,5 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave+1,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==12+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==12)
-		{		 playInstrument(undefined,activeSound,7 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,7 ,currentOctave+1,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==13+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==13)
-		{		 playInstrument(undefined,activeSound,9 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave+1,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==14+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==14)//7
-		{		 playInstrument(undefined,activeSound,11 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,11 ,currentOctave+1,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==15+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==15)
-		{		 playInstrument(undefined,activeSound,0 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,0 ,currentOctave+2,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==16+keyModifier)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==16)
-		{		 playInstrument(undefined,activeSound,2 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave+2,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==17+keyModifier)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==17)
-		{		 playInstrument(undefined,activeSound,4 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,4 ,currentOctave+2,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==18&& $('#chThreeOctaves').is(':checked') )//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==18)
-		{		 playInstrument(undefined,activeSound,5 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave+2,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==19 && $('#chThreeOctaves').is(':checked'))//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==19)
-		{		 playInstrument(undefined,activeSound,7 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,7 ,currentOctave+2,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==20 && $('#chThreeOctaves').is(':checked'))//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==20)
-		{		 playInstrument(undefined,activeSound,9 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave+2,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==21 && $('#chThreeOctaves').is(':checked') )//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==21)
-		{		 playInstrument(undefined,activeSound,11 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,11 ,currentOctave+2,currentLength,true); 
 			}
 			
  		 
 		}
 else{		
 		if($(tdr).html().trim() != ""  && i ==1)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==1)
-		{		 playInstrument(undefined,activeSound,9 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave+2,currentLength,true); 
 			} 
 			  if($(tdr).html().trim() != "" &&   i ==2)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==2)
-		{		 playInstrument(undefined,activeSound,5 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave+2,currentLength,true); 
 			}
 	  if($(tdr).html().trim() != ""   && i ==3)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==3)
-		{		 playInstrument(undefined,activeSound,2 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave+2,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==4)//if(noteSortArray.indexOf($(tdr).html().trim()).length > -1 && && i ==4)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==4)
-		{		 playInstrument(undefined,activeSound,11 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,11 ,currentOctave+1,currentLength,true); 
 			}
 		 	  if($(tdr).html().trim() != ""   && i ==5)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==5)
-		{		 playInstrument(undefined,activeSound,7 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,7 ,currentOctave+1,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==6)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==6)
-		{		 playInstrument(undefined,activeSound,4 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,4 ,currentOctave+1,currentLength,true); 
 			}
 					  if($(tdr).html().trim() != ""   && i ==7)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==7)//1*
-		{		 playInstrument(undefined,activeSound,0 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,0 ,currentOctave+1,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==8)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==8)
-		{		 playInstrument(undefined,activeSound,9 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==9)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==9)
-		{		 playInstrument(undefined,activeSound,5 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==10)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==10)
-		{		 playInstrument(undefined,activeSound,2 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==11)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==11)
-		{		 playInstrument(undefined,activeSound,0 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,0 ,currentOctave,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==12)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==12)
-		{		 playInstrument(undefined,activeSound,4 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,4 ,currentOctave,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==13)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==13)
-		{		 playInstrument(undefined,activeSound,7 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,7 ,currentOctave,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==14)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==14)//7
-		{		 playInstrument(undefined,activeSound,11 ,currentOctave,currentLength); 
+		{		 playInstrument(undefined,activeSound,11 ,currentOctave,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==15)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==15)
-		{		 playInstrument(undefined,activeSound,2 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,2 ,currentOctave+1,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==16)// if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==16)
-		{		 playInstrument(undefined,activeSound,5 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,5 ,currentOctave+1,currentLength,true); 
 			}
 			  if($(tdr).html().trim() != ""   && i ==17)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==17)
-		{		 playInstrument(undefined,activeSound,9 ,currentOctave+1,currentLength); 
+		{		 playInstrument(undefined,activeSound,9 ,currentOctave+1,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==18)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==18)
-		{		 playInstrument(undefined,activeSound, 0 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound, 0 ,currentOctave+2,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==19)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==19)
-		{		 playInstrument(undefined,activeSound, 4 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound, 4 ,currentOctave+2,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==20)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==20)
-		{		 playInstrument(undefined,activeSound, 7 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound, 7 ,currentOctave+2,currentLength,true); 
 			}
 				  if($(tdr).html().trim() != ""   && i ==21)//if($(tdr).html().trim() == $("#pDummyConvert").html() && i ==21)
-		{		 playInstrument(undefined,activeSound, 11 ,currentOctave+2,currentLength); 
+		{		 playInstrument(undefined,activeSound, 11 ,currentOctave+2,currentLength,true); 
 			}
 			}
 				}, playINTERVAL*index +((i+1) *15),i,tdr,isKeybChecked);//NOT i!
@@ -1484,9 +1526,29 @@ var sharpTonesIndexList=[1,3,5,7,9,11];
 
   function stopInstrument(x,timeouttime=0){setTimeout(function(){x.cancelQueue(audioContext);}, timeouttime);}
   
-   
-  function playInstrument(objectElement, name,notenumber = 12, octave=8,time=0){
   
+  var preventBugDuplicates=null; // mainly necessary for writing on mobile devices
+   
+  function playInstrument(objectElement, name,notenumber = 12, octave=8,time=0, isSkipBugDuplicate){
+  
+  if(!isSkipBugDuplicate)
+  {
+  if(preventBugDuplicates ==objectElement )
+  {
+  
+  return; 
+  }
+  else{
+preventBugDuplicates = objectElement;
+setTimeout(function(){preventBugDuplicates=null;}, 25);
+
+}
+
+}
+else
+{
+preventBugDuplicates=null;
+}
 
  var p=new WebAudioFontPlayer();
   			p.loader.decodeAfterLoading(audioContext, name.toString());// alt _tone_0750_Chaos_sf2_file
@@ -1517,7 +1579,7 @@ $("#txtANotes").val($("#txtANotes").val()+" " + KalimbaHeaderNotes[lastClickedCo
 				//p.loader.waitLoad(function () {		//instr=window[ name.toString()];	=> req?
 				selectedPreset= name;  
 				
-				if(activeSound==PresetList[0] || activeSound==PresetList[2]){console.log("Sound sound activated");
+				if(activeSound==PresetList[0] || activeSound==PresetList[2]){//console.log("Sound sound activated");
 				envelope=p.queueWaveTable(audioContext, audioContext.destination					, selectedPreset, 0,detuneAmount+ notenumber +12 *octave, time);}
 				else{ console.log("Sound B activated");
 				envelope=p.queueWaveTable(audioContext, audioContext.destination					, selectedPreset, 0, detuneAmount+ notenumber +12 *octave, time);// notenumber=> 0 till and with 12. ex:https://surikov.github.io/webaudiofontdata/sound/0090_Aspirin_sf2_file.html
@@ -1538,7 +1600,7 @@ function LoadInstruments(){
 for(let i = 0; i < PresetList.length; i++){
 for (g = currentOctave; g < currentOctave+3; g++) {// 10 till 12 octave is used atm
 for (z = 0; z < 13; z++) {// 0-12 range
-playInstrument(this,PresetList[i],z ,g);
+playInstrument(this,PresetList[i],z ,g,true);
 }}}	}	
 
 document.getElementById("tblSheet").addEventListener('contextmenu', event => event.preventDefault());
@@ -1691,17 +1753,17 @@ break;
 	   if(detuneAmount <0.9){
 	   detuneAmount +=0.1;
 	   	  detuneAmount=parseFloat(detuneAmount.toFixed(1));
-	   $("#txtDetuneAmount").val(detuneAmount)
-//setDetune();
-}
+	   $("#sliderDetuneAmount").val(detuneAmount);
+	   setDetune();
+ }
 break;
        case "w":
 	   
 	   if(detuneAmount > 0.0){
 	   detuneAmount -=0.1;
 	   	  detuneAmount=parseFloat(detuneAmount.toFixed(1));
-	   $("#txtDetuneAmount").val(detuneAmount)
-//setDetune();
+	   $("#sliderDetuneAmount").val(detuneAmount);
+ setDetune();
 }
 break;
     default:
@@ -1823,7 +1885,8 @@ else if( i ==23 && i == noteMidi)
 	   if(detuneAmount > 0.0){
 	   detuneAmount -=0.1;
 	   	  detuneAmount=parseFloat(detuneAmount.toFixed(1));
-	   $("#txtDetuneAmount").val(detuneAmount)
+	   $("#sliderDetuneAmount").val(detuneAmount);
+	   setDetune();
 }  
 }
 
@@ -1832,7 +1895,8 @@ else if( i ==26 && i == noteMidi)
 	   if(detuneAmount <0.9){
 	   detuneAmount +=0.1;
 	   	  detuneAmount=parseFloat(detuneAmount.toFixed(1));
-	   $("#txtDetuneAmount").val(detuneAmount)
+	   $("#sliderDetuneAmount").val(detuneAmount);
+	   setDetune();
  }
 }  
  	 
