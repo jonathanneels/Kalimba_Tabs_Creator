@@ -12,7 +12,6 @@ To do's (feedback admin@kalimbatabs.net):
 - volume button
 
 *sheet
-- able play all notes inside a parenthesis
 - able to start playing from selected note (row)
 - auto scroll (follows the notes in the screen while playing)
 
