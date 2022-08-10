@@ -344,7 +344,7 @@ rangeList[i].addEventListener('click', function(event) {
             // double click occurred
             var rangeInput;
 			if(rangeList[i].labels[0] != "undefined"){
-			  rangeInput = prompt("Set value for "+rangeList[i].labels[0].textContent.split(":")[0], rangeList[i].value);
+			  rangeInput = prompt("Set value for "+rangeList[i].labels[0].textContent.split(" ")[0], rangeList[i].value);
 				}
 				else
 				{
