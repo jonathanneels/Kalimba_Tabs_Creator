@@ -166,7 +166,7 @@ input[type="file"] {
  
 <table id="tblSheet" class="noselect">
   <tr style="background-color:silver;border:solid slategrey" id="trSheet">
-      <th id="thMainRowActions"> <input type="button" id="btnAddRow" name="btnAddRow" onclick="addRow()" value="+"> </th>
+      <th id="thMainRowActions"> <input type="button" id="btnAddRow" name="btnAddRow" class="btnRowAddition"  onclick="addRow()" value="+"> </th>
 	      <th class="extraOctaveThree" id="thA" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,9 ,currentOctave+2,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,9 ,currentOctave+2,currentLength); ">6**</th>  <!--  playInstrument(PresetList[0],3 ,currentOctave+2,currentLength);  -->
     <th class="extraOctaveThree" id="thB" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,5 ,currentOctave+2,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,5 ,currentOctave+2,currentLength); ">4**</th> 
     <th  id="thC" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,2 ,currentOctave+2,currentLength); " onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 ); setLengthVal();playInstrument(this,activeSound,2 ,currentOctave+2,currentLength); ">2**</th>
@@ -196,7 +196,7 @@ input[type="file"] {
   
   
     <tr style="background-color:silver;border:solid slategrey" id="trSheetPianoForm">
-      <th id="thMainRowActions"> <input type="button" id="btnAddRow" name="btnAddRow" onclick="addRow()" value="+"> </th>
+      <th id="thMainRowActions"> <input type="button" id="btnAddRow" name="btnAddRow" class="btnRowAddition" onclick="addRow()" value="+"> </th>
     <th  id="thK" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,0 ,currentOctave,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,0 ,currentOctave,currentLength); "  style="background-color:red;">1</th>
       <th  id="thJ" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,2 ,currentOctave,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,2 ,currentOctave,currentLength);" >2</th>
   <th  id="thL" onclick=" $(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,4 ,currentOctave,currentLength); "onmouseover= "$(this).stop(true, true).effect( 'highlight', {times:3,color: 'aliceblue'}, 1000 );setLengthVal(); playInstrument(this,activeSound,4 ,currentOctave,currentLength); " >3</th>
@@ -759,11 +759,15 @@ if (filename == null || filename == "") {
   txt = filename;
 
 filename=txt+".jpg";
-  btnAddRow
-    $("#btnAddRow").hide();
+  
+  
+    $(".btnRowAddition").hide();
   $(".removeElement").hide();
- 
-  html2canvas(document.querySelector("#tblSheet")).then(canvas => {
+
+  html2canvas(document.querySelector("#tblSheet"), {
+  width: $("#divMain").width(),
+  height:  $("#divMain").height()
+}).then(canvas => {
   //  document.body.appendChild(canvas);
 	
 	    var a = document.createElement('a');
@@ -779,7 +783,7 @@ if($('#chVisibleRowOptions').is(':checked'))
 }
   
   }
-    $("#btnAddRow").show();
+    $(".btnRowAddition").show();
 
   }
   
