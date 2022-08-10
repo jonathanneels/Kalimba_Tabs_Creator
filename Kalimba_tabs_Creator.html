@@ -721,11 +721,24 @@ if (filename == null || filename == "") {
 
 				 }
  				 
+				 	
+				 if($("#trNumericNotationIsChecked").find("td:first").html()  =="false")
+				 {
+				 				 $("#chNumericNotation").prop('checked', false);
+
+				 }
+				 else  {
+				 				 $("#chNumericNotation").prop('checked',  true);
+
+				 }
+				 
+				 
 				// $("#chThreeOctIsChecked").remove();
 				 //$("#chKeyboardIsChecked").remove();
 				 
  		          document.getElementById('ktcImport').value = null;
 				  setKeyboard(true);
+				 setNotation();
 
         }
         var file = event.target.files[0];
@@ -1377,9 +1390,13 @@ setVisualThreeScales();
 
 $("#trThreeOctIsChecked").remove();
 $("#trKeyboardIsChecked").remove();  
+$("#trNumericNotationIsChecked").remove();  
+
 
 $('#tblSheet').append('<tr id="trThreeOctIsChecked" hidden><td>' +$('#chThreeOctaves').is(':checked')+'</td></tr>');
 $('#tblSheet').append('<tr id="trKeyboardIsChecked" hidden><td>'+$('#chKeyboard').is(':checked')+'</td></tr>');
+$('#tblSheet').append('<tr id="trNumericNotationIsChecked" hidden><td>'+$('#chNumericNotation').is(':checked')+'</td></tr>');
+
 
 return isOkToGenerate;
 
