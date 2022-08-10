@@ -139,11 +139,11 @@ input[type="file"] {
 
 <span id="spanMainToneShifters">
 <span id="sDetune">
-<label id="lblLength"></label><input id="sliderLength" type="range" min="0" max="10000" step="100" value="2000" onchange="setLengthVal()" />
+<label id="lblLength"  for="sliderLength"></label><input id="sliderLength" type="range" min="0" max="10000" step="100" value="2000" onchange="setLengthVal()" />
 
-  <label for="sliderDetuneAmount" id="lblDetuneAmount">Detune: 0.0</label>
+  <label for="sliderDetuneAmount" id="lblDetuneAmount">&#119055; 0.0</label>
   <input id="sliderDetuneAmount" type="range" min="0.0" max="0.9" step="0.1" value="0" onchange="setDetune()" />
-  <label id="lblOctave"></label><input id="sliderOctave" type="range" min="0" max="8" step="1" value="5" onchange="setOctaveVal()" />
+  <label id="lblOctave" for="sliderOctave"></label><input id="sliderOctave" type="range" min="0" max="8" step="1" value="5" onchange="setOctaveVal()" />
 
 </span> 
 </span>
@@ -330,7 +330,44 @@ var playINTERVAL = 500;	//not const | in milliseconds https://gist.github.com/fe
     var lastClickedCol = -1;
      var lastClickedRow = -1;
  
+	var touchtime = 0; 
+function addDblClickOnRangeSliders()
+{ var rangeList= document.querySelectorAll('input[type="range"]'); 
+  for (let i = 0; i < rangeList.length; i++) { 
+rangeList[i].addEventListener('click', function(event) {
+      if (touchtime == 0) {
+        // set first click
+        touchtime = new Date().getTime();
+    } else {
+        // compare first click to this click and see if they occurred within double click threshold
+        if (((new Date().getTime()) - touchtime) < 500) {
+            // double click occurred
+            var rangeInput;
+			if(rangeList[i].labels[0] != "undefined"){
+			  rangeInput = prompt("Set value for "+rangeList[i].labels[0].textContent.split(":")[0], rangeList[i].value);
+				}
+				else
+				{
+							  rangeInput = prompt("Set value", rangeList[i].value);
 
+				}
+if (rangeInput != null && !isNaN(rangeInput)) {
+  rangeList[i].value= parseFloat(rangeInput);
+  rangeList[i].defaultValue = parseFloat(rangeInput);
+setLengthVal();setOctaveVal();setDetune();
+ 
+}
+
+			
+            touchtime = 0;
+        } else {
+            // not a double click so set as a new first click
+            touchtime = new Date().getTime();
+        }
+    }
+});
+}
+}
 $(function() {
 $('#spanHelp').toggle();
 
@@ -376,6 +413,8 @@ $("#ulRButton").append("      <li><p>"+noteSortNumericArray[i]+"&nbsp;&nbsp;</p>
 }
   //  debugger;
   });
+
+addDblClickOnRangeSliders();
 
 });
 
@@ -444,13 +483,13 @@ function uuidv4() {
 
 function setLengthVal()
 {
-$("#lblLength").html("&#8669;: " + $('#sliderLength').val( ));
+$("#lblLength").html("&#8669; " + $('#sliderLength').val( ));
 currentLength=parseFloat($('#sliderLength').val( ));
 
 }
 function setOctaveVal()
 {
-$("#lblOctave").html("Octave: " + $('#sliderOctave').val( ));
+$("#lblOctave").html("&#119094; " + $('#sliderOctave').val( ));
 currentOctave=parseInt($('#sliderOctave').val( ));
 //LoadInstruments();
 }
@@ -538,8 +577,8 @@ function setDetune()
 {
 detuneAmount=  parseFloat(parseFloat($("#sliderDetuneAmount").val()).toFixed(1));
 if(detuneAmount==0)
-{$("#lblDetuneAmount").html('Detune: ' +$("#sliderDetuneAmount").val()+".0");}
-else{ $("#lblDetuneAmount").html('Detune: ' +$("#sliderDetuneAmount").val());}
+{$("#lblDetuneAmount").html('&#119055; ' +$("#sliderDetuneAmount").val()+".0");}
+else{ $("#lblDetuneAmount").html('&#119055; ' +$("#sliderDetuneAmount").val());}
  
 }
 function setNotation()
@@ -739,7 +778,7 @@ if (filename == null || filename == "") {
  		          document.getElementById('ktcImport').value = null;
 				  setKeyboard(true);
 				 setNotation();
-
+addDblClickOnRangeSliders();
         }
         var file = event.target.files[0];
         fileReader.readAsText(file);
@@ -1446,8 +1485,8 @@ $( document ).ready(function() {
 	
 				LoadInstruments();
 				
-				$("#lblOctave").html("Octave: " + $('#sliderOctave').val( )); 
-$("#lblLength").html("&#8669;: " + $('#sliderLength').val( ));
+				$("#lblOctave").html("&#119094; " + $('#sliderOctave').val( )); 
+$("#lblLength").html("&#8669; " + $('#sliderLength').val( ));
  
 });
 
@@ -1736,7 +1775,7 @@ domElementToPush.children()[21].click();
       break;
      case "l": 
  if( currentOctave >0){
-$("#lblOctave").html("Octave: " + currentOctave);
+$("#lblOctave").html("&#119094; " + currentOctave);
 currentOctave-=1; 
 $('#sliderOctave').val(currentOctave );
 //setOctaveVal();
@@ -1744,7 +1783,7 @@ $('#sliderOctave').val(currentOctave );
         break; 
        case "m":
  if( currentOctave <8){
-$("#lblOctave").html("Octave: " + currentOctave);
+$("#lblOctave").html("&#119094; " + currentOctave);
 currentOctave+=1; 
 $('#sliderOctave').val(currentOctave );
 //setOctaveVal();
@@ -1866,7 +1905,7 @@ tableTr=$("#trSheetPianoForm th");
  else if( i ==21 && i == noteMidi)
  {
  if( currentOctave >0){
-$("#lblOctave").html("Octave: " + currentOctave);
+$("#lblOctave").html("&#119094; " + currentOctave);
 currentOctave-=1; 
 $('#sliderOctave').val(currentOctave );
 //setOctaveVal();
@@ -1875,7 +1914,7 @@ $('#sliderOctave').val(currentOctave );
  else if( i ==22 && i == noteMidi)
  {
  if( currentOctave <8){
-$("#lblOctave").html("Octave: " + currentOctave);
+$("#lblOctave").html("&#119094; " + currentOctave);
 currentOctave+=1; 
 $('#sliderOctave').val(currentOctave );
 //setOctaveVal();
