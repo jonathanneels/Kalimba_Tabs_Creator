@@ -340,7 +340,7 @@ rangeList[i].addEventListener('click', function(event) {
         touchtime = new Date().getTime();
     } else {
         // compare first click to this click and see if they occurred within double click threshold
-        if (((new Date().getTime()) - touchtime) < 500) {
+        if (((new Date().getTime()) - touchtime) < 300) {
             // double click occurred
             var rangeInput;
 			if(rangeList[i].labels[0] != "undefined"){
