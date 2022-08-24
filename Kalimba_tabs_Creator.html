@@ -98,11 +98,11 @@ input[type="file"] {
 
 
 
- <span style="margin-left:1%;"> 3 &#127932; <input type="checkbox" id="chThreeOctaves" name="chThreeOctaves" value="" onchange="var isCh=$('#chThreeOctaves').is(':checked');if(generateSheet()){setVisualThreeScales();}else{ setTimeout(function(){ $('#chThreeOctaves').prop('checked', !isCh); } , 100,isCh);} "></span>
+ <span style="margin-left:1%;"> 3 &#127932; <input type="checkbox" id="chThreeOctaves" name="chThreeOctaves" value="" onchange="if(!isTableManipulationOk)  { alert('Table locked');   var isCh=$('#chThreeOctaves').is(':checked');setTimeout(function(){ $('#chThreeOctaves').prop('checked',!isCh); } , 100,isCh);return; }var isCh=$('#chThreeOctaves').is(':checked');if(generateSheet()){setVisualThreeScales();}else{ setTimeout(function(){ $('#chThreeOctaves').prop('checked', !isCh); } , 100,isCh);} "></span>
  <span style="margin-left:1%;"> <label id="lblSilence">&#128263;</label> <input type="checkbox" id="chSilence" name="chSilence" value="" onchange="setSoundOnOff()" checked></span>
  <span style="margin-left:1%;"> &#x2348;<input type="checkbox" id="chVisibleRowOptions" name="chVisibleRowOptions" value="" checked onchange="setRemoveElementsVisibility()"></span>
   <span style="margin-left:1%;"> &#8543;<input type="checkbox" id="chNumericNotation" name="chNumericNotation" value=""  onchange=" setNotation()"></span>
-  <span style="margin-left:1%;">&#127929;<input type="checkbox" id="chKeyboard" name="chKeyboard" value=""  onchange=" setKeyboard()"></span>
+  <span style="margin-left:1%;">&#127929;<input type="checkbox" id="chKeyboard" name="chKeyboard" value=""  onchange="if(!isTableManipulationOk)  { alert('Table locked'); var isCh=$('#chKeyboard').is(':checked');  setTimeout(function(){ $('#chKeyboard').prop('checked', !isCh); } , 100,isCh);return; }setKeyboard()"></span>
 
  <p hidden id="pDummyConvert"> </p></span>
  
@@ -617,7 +617,7 @@ isNumericNotation=false;noteSortArray=noteSortDefaultArray;
 
 function setKeyboard(isSkipTxtANotes, isNotSkipGenerateSheet)
 {
-var isCh=$('#chKeyboard').is(':checked');
+ var isCh=$('#chKeyboard').is(':checked');
 if(isCh)
 {  
 $("#trSheet").hide();
