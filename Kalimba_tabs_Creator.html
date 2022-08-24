@@ -744,6 +744,8 @@ setHeader(headerNameList);
 } 
 setVisualThreeScales();
 setRemoveElementsVisibility();
+
+generateSaveItems();
   }
   
   function exportTab()
@@ -819,6 +821,14 @@ if (filename == null || filename == "") {
 
 				 }
 				 
+				 	 if($("#trTextSheet").find("td:first").html().trim()  !=="")
+				 {
+				 				$('#txtANotes').val($("#trTextSheet").find("td:first").html().trim());
+
+				 }
+				 
+				 
+ 
 				 
 				// $("#chThreeOctIsChecked").remove();
 				 //$("#chKeyboardIsChecked").remove();
@@ -888,7 +898,7 @@ if($('#chVisibleRowOptions').is(':checked'))
    var msSpeed=50;//200;
 
 if(typeof customRow == "undefined")
-{   msSpeed= prompt("Lines following up in ms:", "1500");//refinement in each line later (based on each notesort & noteline).
+{   msSpeed= prompt("Lines following up in ms:", "500");//refinement in each line later (based on each notesort & noteline).
 }
 if (msSpeed == null || msSpeed == "") {
 //no interaction
@@ -1371,6 +1381,22 @@ console.log("=>" +convertedNote);
 			}
 		});}
 }
+
+function generateSaveItems()
+{
+$("#trThreeOctIsChecked").remove();
+$("#trKeyboardIsChecked").remove();  
+$("#trNumericNotationIsChecked").remove();  
+$("#trTextSheet").remove();  
+
+
+
+$('#tblSheet').append('<tr id="trThreeOctIsChecked" hidden><td>' +$('#chThreeOctaves').is(':checked')+'</td></tr>');
+$('#tblSheet').append('<tr id="trKeyboardIsChecked" hidden><td>'+$('#chKeyboard').is(':checked')+'</td></tr>');
+$('#tblSheet').append('<tr id="trNumericNotationIsChecked" hidden><td>'+$('#chNumericNotation').is(':checked')+'</td></tr>');
+$('#tblSheet').append('<tr id="trTextSheet" hidden><td>'+$('#txtANotes').val()+'</td></tr>');
+
+}
 function generateSheet(isSkipTxtANotes)
 {
 
@@ -1494,15 +1520,7 @@ isCombComplete=false;}
 
 setVisualThreeScales();
 
-$("#trThreeOctIsChecked").remove();
-$("#trKeyboardIsChecked").remove();  
-$("#trNumericNotationIsChecked").remove();  
-
-
-$('#tblSheet').append('<tr id="trThreeOctIsChecked" hidden><td>' +$('#chThreeOctaves').is(':checked')+'</td></tr>');
-$('#tblSheet').append('<tr id="trKeyboardIsChecked" hidden><td>'+$('#chKeyboard').is(':checked')+'</td></tr>');
-$('#tblSheet').append('<tr id="trNumericNotationIsChecked" hidden><td>'+$('#chNumericNotation').is(':checked')+'</td></tr>');
-
+generateSaveItems();
 
 return isOkToGenerate;
 
