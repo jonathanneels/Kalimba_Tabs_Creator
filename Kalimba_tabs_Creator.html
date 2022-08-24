@@ -108,7 +108,7 @@ input[type="file"] {
  
  <span id="spanCreateSheet" style="margin-right:0;">
    <input type="button" id="btnPlaySheet" name="btnPlaySheet"  style="float:right;" onclick="playSheet()"  value="|>">  
-  <input type="button" id="btnNotes" name="Notes" style="float:right;" onclick="  if(!isTableManipulationOk) {  alert('Table locked');  return;  }generateSheet()" value="Generate"> 
+  <input type="button" id="btnNotes" name="Notes" style="float:right;" onclick="  if(!isTableManipulationOk) {  alert('Table locked');  return;  }generateSheet(false,true)" value="Generate"> 
 
 
 <textarea id="txtANotes" rows="1" cols="25" style="float:right;" >E** A* B 2** 1* (3 4) 1** [4 E 5**]</textarea>
@@ -1382,7 +1382,7 @@ console.log("=>" +convertedNote);
 		});}
 }
 
-function generateSaveItems()
+function generateSaveItems(isShowTextSheet)
 {
 $("#trThreeOctIsChecked").remove();
 $("#trKeyboardIsChecked").remove();  
@@ -1394,10 +1394,12 @@ $("#trTextSheet").remove();
 $('#tblSheet').append('<tr id="trThreeOctIsChecked" hidden><td>' +$('#chThreeOctaves').is(':checked')+'</td></tr>');
 $('#tblSheet').append('<tr id="trKeyboardIsChecked" hidden><td>'+$('#chKeyboard').is(':checked')+'</td></tr>');
 $('#tblSheet').append('<tr id="trNumericNotationIsChecked" hidden><td>'+$('#chNumericNotation').is(':checked')+'</td></tr>');
+if(isShowTextSheet)
+{
 $('#tblSheet').append('<tr id="trTextSheet" hidden><td>'+$('#txtANotes').val()+'</td></tr>');
-
 }
-function generateSheet(isSkipTxtANotes)
+}
+function generateSheet(isSkipTxtANotes, isShowTextSheet)
 {
 
 var isOkToGenerate= true;
@@ -1520,7 +1522,7 @@ isCombComplete=false;}
 
 setVisualThreeScales();
 
-generateSaveItems();
+generateSaveItems(isShowTextSheet);
 
 return isOkToGenerate;
 
