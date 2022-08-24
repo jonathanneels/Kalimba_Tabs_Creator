@@ -821,7 +821,8 @@ if (filename == null || filename == "") {
 
 				 }
 				 
-				 	 if($("#trTextSheet").find("td:first").html().trim()  !=="")
+				 
+				 	 if(   $("#trTextSheet").find("td:first").length )
 				 {
 				 				$('#txtANotes').val($("#trTextSheet").find("td:first").html().trim());
 
