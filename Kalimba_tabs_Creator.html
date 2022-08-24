@@ -323,6 +323,7 @@ var KalimbaAltHeaderNotes= ["A**","F**","D**","B*","G*","E*","C*","A","F","D","C
 //var Ocarina12HHeaderNotes= ["-","000000<br>000000","00000*<br>00000*","**000*<br>00000*","***0**<br>00000*","***0**<br>**000*","***0**<br>**0***","******<br>******","-","-","-","-","-","***0**<br>******","***0**<br>**0*0*","***0**<br>*0000*","***00*<br>00000*","*0000*<br>00000*","00000*<br>000000","-","-"];//"-",	"4**",	"2**",	"7*",	"5*",	"3*",	"1*",	"6",	"-"	,"-",	"-"	,"-"	,"-",	"7",	"2*",	"4*",	"6*",	"1**",	"3**",	"-",	"-"	 ] => experimental.
 //var HarmonicaHeaderNotes= ["-10","-9","-8","-7","6","5","4","-","-","-1","1","2","-2","-3","-4","-5","-6","7","8","9","10"];//Not complete??  FOR FUTURE REF.
 
+var isTableManipulationOk=true;
 var isNumericNotation=false;
 var isMute= false;
 var playINTERVAL = 500;	//not const | in milliseconds https://gist.github.com/fernandosavio/6011834
@@ -387,6 +388,13 @@ $("#ulRButton").append("      <li><p>"+noteSortNumericArray[i]+"&nbsp;&nbsp;</p>
 
 
     $("body").on("contextmenu", "#tblSheet td", function(e) {
+	
+	  if(!isTableManipulationOk)
+  {
+  alert('Table locked');
+  return;
+  }
+	
          $contextMenu.css({
               display: "block",
               left: e.pageX,
@@ -421,6 +429,11 @@ addDblClickOnRangeSliders();
 
 function shiftRowDown(obj){//REF:https://stackoverflow.com/questions/4954373/move-table-rows-up-and-down-jquery-javascript/4955223#4955223
 
+  if(!isTableManipulationOk)
+  {
+  console.log('Table locked');
+  return;
+  }
 var rowid= obj.id.replace("d_",""); 
  var indexR=0;
  var rowObj;
@@ -449,6 +462,13 @@ else
  
  }  
 function shiftRowUp(obj){
+
+  if(!isTableManipulationOk)
+  {
+  console.log('Table locked');
+  return;
+  }
+  
  var rowid= obj.id.replace("u_",""); 
  var indexR=0;
  var rowObj;
@@ -667,6 +687,18 @@ function setHeader(headerArray)
 }
 function setHeaderDetail()
 {
+
+ var questionA = window.confirm("Disable/enable table manipulation?\nCancel to set header columns.");
+ if (questionA) {
+isTableManipulationOk = !isTableManipulationOk; 
+if(!isTableManipulationOk)
+{$("#btnAddRow").hide();}
+else{$("#btnAddRow").show();}
+alert('Table manipulation set: ' + isTableManipulationOk.toString())
+}
+else {
+
+
 //$("th").css({"backgroundColor": "black", "color": "white"}); cool theme!!
   var headerName = prompt("Set the (21) header columns:",KalimbaAltHeaderNotes.join(','));
 
@@ -676,9 +708,19 @@ if (headerName == null || headerName == "") {
 
 headerNameList = headerName.split(",");
 setHeader(headerNameList);
-}}
+}
+}
+}
+
  function addRow()
   {
+  
+  if(!isTableManipulationOk)
+  {
+  console.log('Table locked');
+  return;
+  }
+  
    $(".extraOctaveThree").show();
    $(".removeElement").show();
 
@@ -705,7 +747,10 @@ setRemoveElementsVisibility();
   }
   
   function exportTab()
-  {$('tr').removeClass('active');
+  {
+  		isTableManipulationOk=true;; $("#btnAddRow").show();
+
+  $('tr').removeClass('active');
   var filename = prompt("Export entire tab as name:", "kalimbaTab");
  
 if (filename == null || filename == "") {
@@ -734,6 +779,9 @@ if (filename == null || filename == "") {
   var file = $('#ktcImport').get(0).files[0];
          var fileReader = new FileReader();
         fileReader.onload = function(event) {
+		
+		isTableManipulationOk=true;; $("#btnAddRow").show();
+		
           $('#tblSheet').html(event.target.result);
 				  
  
@@ -788,7 +836,8 @@ addDblClickOnRangeSliders();
 
   function exportTabAsImage()
   {
-  
+    		isTableManipulationOk=true;; $("#btnAddRow").show();
+
   $('tr').removeClass('active');
   var filename = prompt("Give your tab a name.", "kalimbaScreenshot");
 
@@ -1036,6 +1085,11 @@ else{
   
   function addOrRemoveLinkLine(id)
   {
+    if(!isTableManipulationOk)
+  {
+  alert('Table locked');
+  return;
+  }
   if ($(id).html().trim() == "")
 {
 //$(id).html("|")
@@ -1056,6 +1110,11 @@ else
   }
   function changeNoteContent(id)
   {
+    if(!isTableManipulationOk)
+  {
+  alert('Table locked');
+  return;
+  }
          $('tr').removeClass('active');//REF:http://embed.plnkr.co/DCS0Mt/preview &  https://stackoverflow.com/questions/29283285/how-to-highlight-a-table-row-when-one-of-its-cell-is-clicked-using-jquery
         $(id).parent().addClass('active'); 
 
@@ -1087,7 +1146,11 @@ console.log($(id).html());
 
 function RemoveLine(id)
 {
- 
+  if(!isTableManipulationOk)
+  {
+  console.log('Table locked');
+  return;
+  }
   $(id).closest('tr').remove();
 }
 function setVisualThreeScales()
