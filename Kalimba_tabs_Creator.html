@@ -111,7 +111,7 @@ input[type="file"] {
   <input type="button" id="btnNotes" name="Notes" style="float:right;" onclick="  if(!isTableManipulationOk) {  alert('Table locked');  return;  }generateSheet(false,true)" value="Generate"> 
 
 
-<textarea id="txtANotes" rows="1" cols="25" style="float:right;" >E** A* B 2** 1* (3 4) 1** [4 E 5**]</textarea>
+<textarea id="txtANotes" rows="1" cols="25" style="float:right;" onblur="generateSaveItems(true);">E** A* B 2** 1* (3 4) 1** [4 E 5**]</textarea>
 </span>
  
 <br><br>
@@ -745,7 +745,7 @@ setHeader(headerNameList);
 setVisualThreeScales();
 setRemoveElementsVisibility();
 
-generateSaveItems();
+generateSaveItems(true);
   }
   
   function exportTab()
@@ -1163,6 +1163,8 @@ function RemoveLine(id)
   return;
   }
   $(id).closest('tr').remove();
+  
+  generateSaveItems(true);
 }
 function setVisualThreeScales()
 {
